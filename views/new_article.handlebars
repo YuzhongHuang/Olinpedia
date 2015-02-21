@@ -1,12 +1,18 @@
 <h1> Submit your article </h1>
 
-<form id="" method="POST">
+<form id="new_article_form" method="POST">
     Article title<br>
-    <input id="name" type="text" value=""><br>
+    <input id="name" name="name" type="text" value=""><br><br>
+    <select id="grade" name="grade">
+    	<option id="freshmen">freshmen</option>
+    	<option id="sophomore">sophomore</option>
+    	<option id="junior">junior</option>
+    	<option id="senior">senior</option>
+    </select><br>
     Article description<br>
-    <textarea id="description" ></textarea><br>
+    <textarea id="description" name="description"></textarea><br><br>
     <p> image </p>
-    <input id="article_submit_button" class="button" type="submit" value="Submit new article!">
+    <input id="article_submit_button" class="button" type="submit" value="Submit new article!"></input>
 </form>
 
-<!-- <script type="text/javascript" src="javascripts/home.js"></script> -->
+<script type="text/javascript" src="javascripts/new_article_form.js"></script>

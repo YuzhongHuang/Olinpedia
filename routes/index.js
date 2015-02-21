@@ -24,7 +24,20 @@ var get_new_article = function(req,res){
 };
 
 var post_new_article = function(req,res){
-    res.render('new_article');
+    var new_article_info = req.body;
+    //write code to prevent blank form
+    var i = new Article(new_article_info);
+
+    Article.count({'name':new_article_info.name}, function(err, count) {
+        if (!count) {
+            i.save(function(err) {
+                if (err) console.error(err);
+                res.json(new_article_info);
+            });
+        } else {
+            //write code to prevent name duplcation
+        }
+    });
 };
 
 var view_article = function(req,res){
