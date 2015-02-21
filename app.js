@@ -24,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+app.get('/', index.home);
+app.get('/view/:name', index.view_article);
 app.get('/new_article', index.get_new_article);
 app.post('/new_article', index.post_new_article);
 
