@@ -1,3 +1,4 @@
+/*
 body{ background-color: #C1DEEE; 
     background-image: url("../images/clouds.jpg");
     background-repeat: repeat-x;
@@ -130,7 +131,6 @@ body{ background-color: #C1DEEE;
 }
 
 .button {
-    /* copied this code from http://www.bestcssbuttongenerator.com/#/sMS6wtjhiQ */
     -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
     -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
     box-shadow:inset 0px 1px 0px 0px #54a3f7;
@@ -193,4 +193,4 @@ body{ background-color: #C1DEEE;
 #error_message{
     color: grey;
     font-size: 80% ;
-}
+} */

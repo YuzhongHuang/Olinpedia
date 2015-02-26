@@ -57,7 +57,3 @@ var Article = React.createClass({
     );
   }
 });
-
-module.exports.Article = Article;
-module.exports.Toolbar = Toolbar;
-module.exports.Searchbar = Searchbar;

@@ -1,7 +1,3 @@
-Article = require('./shared_components.jsx').Article;
-Toolbar = require('./shared_components.jsx').Toolbar;
-Searchbar = require('./shared_components.jsx').Searchbar;
-
 var Wiki = React.createClass({
   render: function() {
     return (
@@ -13,7 +9,11 @@ var Wiki = React.createClass({
   }
 });
 
+var initialName = document.getElementById('initial-name').innerHTML;
+var initialUrl = '/get_article/'+initialName
+console.log(initialUrl);
+
 React.render(
-  <Wiki url="" />,
+  <Wiki url={initialUrl} />,
   document.getElementById('content')
 );

@@ -33,21 +33,41 @@ var get_new_article = function(req,res){
 var post_new_article = function(req,res){
     var new_article_info = req.body;
     //write code to prevent blank form
-    var i = new Article(new_article_info);
+    var new_article = new Article(new_article_info);
 
     Article.count({'name':new_article_info.name}, function(err, count) {
         if (!count) {
-            i.save(function(err) {
+            new_article.save(function(err) {
                 if (err) console.error(err);
                 res.json(new_article_info);
             });
         } else {
-            //write code to prevent name duplcation
+            res.send({err: true, err_msg: 'An article with this name exists already!' });
         }
     });
 };
 
+var get_article = function(req,res){
+    if (req.params.name) {
+        Article.findOne({name: req.params.name}, function (err, article) {
+            if (err) {
+                res.status(500).send("Something broke!");
+            } else {
+                if (article) {
+                    res.send(article);
+                } else {
+                    res.status(404).send("No article found!");
+                }
+            }
+        });
+    } else { 
+        res.send('Nothing here, move along!');
+    }
+};
+
 var view_article = function(req,res){
+    res.render('view_article',{name: req.params.name});
+    /*
     console.log('hallo');
     if (req.params.name) {
         Article.findOne({name: req.params.name}, function (err, article) {
@@ -57,18 +77,27 @@ var view_article = function(req,res){
                 if (article) {
                     res.render('view_article', article);
                 } else {
-                    res.send('Could not find article with specified name!');
+                    var new_article = new Article({
+                        name:req.params.name,
+                        description:"Nothing to see here! Why don't you edit this page and add something?",
+                        image:''
+                    });
+                    new_article.save(function(err){
+                        if (err) console.error(err);
+                        res.render('view_article', new_article);
+                    })
                 }
             }
         });
     } else { 
-        res.send('Nothing here, move on!');
-    }
+        res.send('Nothing here, move along!');
+    } */
 };
 
 
 module.exports.home = home;
 module.exports.get_new_article = get_new_article;
+module.exports.get_article = get_article;
 module.exports.post_new_article = post_new_article;
 module.exports.view_article = view_article;
 module.exports.get_random_article = get_random_article;

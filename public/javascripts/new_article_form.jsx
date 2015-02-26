@@ -1,65 +1,3 @@
-//Toolbar = require('./shared_components.jsx').Toolbar;
-//Searchbar = require('./shared_components.jsx').Searchbar;
-var Searchbar = React.createClass({
-  render: function() {
-    return (
-      <div className="searchbar">
-        "I am a search bar!"
-      </div>
-    );
-  }
-});
-
-var Toolbar = React.createClass({
-  render: function() {
-    return (
-      <div className="toolbar">
-        "I am a tool bar holding a search bar!
-        <Searchbar />
-      </div>
-    );
-  }
-});
-
-var Article = React.createClass({
-  loadArticleFromServer: function() {
-    var this_component = this;
-    console.log(this.props.url);
-    $.get(this.props.url)
-        .done(
-          function(data) {
-              this_component.setState({data: data});
-          }
-        )
-        .error(
-          function(xhr, status, err) {
-              console.error(this_component.props.url, status, err.toString());
-          }
-        );
-  },
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
-      this.loadArticleFromServer();
-      setInterval(this.loadArticleFromServer, 2000); //refresh the article every 2000 milliseconds.
-  },
-  render: function() {
-    //console.log(this.state.data);
-    return (
-      <div className="article">
-        <h2 className="name">
-          {this.state.data.name}
-        </h2>
-        <p className="description">
-            {this.state.data.description}
-            {this.state.data.image}
-        </p>
-      </div>
-    );
-  }
-});
-
 //var $form = $("#new_article_form");
 //
 //var onSuccess = function(data, status){
@@ -81,26 +19,46 @@ var Article = React.createClass({
 //});
 
 var NewArticleForm = React.createClass({
-    handleSubmit: function(e){
-        e.preventDefault();
+    handleSubmit: function(event){
+        console.log('hello!');
+        event.preventDefault();
+        var name = this.refs.name.getDOMNode().value.trim();
+        var grade = this.refs.grade.getDOMNode().value.trim();
+        var description = this.refs.description.getDOMNode().value.trim();
+        if (!name || !grade || !description) {
+          console.log(grade);
+          console.log(description);
+          return;
+        }
+        $.post("new_article", {name:name, grade:grade, description:description})
+            .done(
+                function(data, status){
+                    console.log('Posted!');
+                    window.location.replace('/view/' + data.name);
+                })
+            .error(
+                function(data, status) {
+                    console.log("status", status);
+                    console.log("error", data);
+                });
     },
     render: function() {
       return(
         <div>
             Article title 
             <form className="newArticleForm" onSubmit={this.handleSubmit}>
-                <input id="name" name="name" type="text" value=""></input>
-                <select id="grade" name="grade">
+                <input id="name" type="text" ref="name"></input>
+                <select id="grade" ref="grade">
                     <option id="freshmen">freshmen</option>
                     <option id="sophomore">sophomore</option>
                     <option id="junior">junior</option>
                     <option id="senior">senior</option>
                 </select>
+                Article description
+                <textarea id="description" ref="description"></textarea>
+                <p> image </p>
+                <input id="article_submit_button" className="button" type="submit" value="Submit new article!"></input>
             </form>
-            Article description
-            <textarea id="description" name="description"></textarea>
-            <p> image </p>
-            <input id="article_submit_button" class="button" type="submit" value="Submit new article!"></input>
         </div>
       );
     }
