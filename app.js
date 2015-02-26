@@ -25,6 +25,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', index.home);
+app.get('/random_article', index.get_random_article);
 app.get('/view/:name', index.view_article);
 app.get('/new_article', index.get_new_article);
 app.post('/new_article', index.post_new_article);

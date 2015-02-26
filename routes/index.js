@@ -1,6 +1,11 @@
 var Article = require('../models/models.js').Article;
 
-var home = function(req,res){ //get a random article
+var home = function(req,res){ 
+    res.render('home');
+};
+
+var get_random_article = function(req,res){
+    console.log('hello!');
     Article.count().exec(function(err, count){
         var random = Math.floor(Math.random() * count);
         Article.findOne().skip(random).exec(
@@ -9,14 +14,16 @@ var home = function(req,res){ //get a random article
                     res.status(500).send("Something broke!");
                 } else {
                     if (article) {
-                        res.render('home', article);
+                        console.log(article);
+                        console.log('hello!');
+                        res.send(article);
                     } else {
                         res.send("Couldn't find any articles!");
                 }
             }
         });
     });
-};
+}
 
 var get_new_article = function(req,res){
     console.log('hallo');
@@ -64,3 +71,4 @@ module.exports.home = home;
 module.exports.get_new_article = get_new_article;
 module.exports.post_new_article = post_new_article;
 module.exports.view_article = view_article;
+module.exports.get_random_article = get_random_article;
