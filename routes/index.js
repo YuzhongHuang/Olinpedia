@@ -56,7 +56,7 @@ var get_article = function(req,res){
                 if (article) {
                     res.send(article);
                 } else {
-                    res.status(404).send("No article found!");
+                    res.send({err:true, error_message:'No article with this name exists yet!'});
                 }
             }
         });

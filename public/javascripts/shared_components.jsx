@@ -43,7 +43,6 @@ var Article = React.createClass({
       setInterval(this.loadArticleFromServer, 2000); //refresh the article every 2000 milliseconds.
   },
   render: function() {
-    //console.log(this.state.data);
     return (
       <div className="article">
         <h2 className="name">
@@ -53,6 +52,7 @@ var Article = React.createClass({
             {this.state.data.description}
             {this.state.data.image}
         </p>
+        {this.state.data.error_message}
       </div>
     );
   }
