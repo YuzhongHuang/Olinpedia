@@ -47,6 +47,21 @@ var post_new_article = function(req,res){
     });
 };
 
+var post_search_article = function(req,res){
+    var search_article_info = req.body;
+    if (!search_article_info.name){
+        
+    } else {
+        Article.count({'name':search_article_info.name}, function(err, count) {
+            if (!count) {
+                    res.send({err: true, err_msg: 'There is no article about ' +  search_article_info.name + '. Go ahead and create one!'});
+            } else {
+                res.json(search_article_info);
+            }
+        });
+    }
+};
+
 var get_article = function(req,res){
     if (req.params.name) {
         Article.findOne({name: req.params.name}, function (err, article) {
@@ -66,6 +81,7 @@ var get_article = function(req,res){
 };
 
 var view_article = function(req,res){
+    console.log(req.params.name);
     res.render('view_article',{name: req.params.name});
     /*
     console.log('hallo');
@@ -101,3 +117,4 @@ module.exports.get_article = get_article;
 module.exports.post_new_article = post_new_article;
 module.exports.view_article = view_article;
 module.exports.get_random_article = get_random_article;
+module.exports.post_search_article = post_search_article;

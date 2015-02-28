@@ -30,6 +30,7 @@ app.get('/get_article/:name', index.get_article);
 app.get('/view/:name', index.view_article);
 app.get('/new_article', index.get_new_article);
 app.post('/new_article', index.post_new_article);
+app.post('/search_article', index.post_search_article);
 
 app.listen(PORT, function(){
     console.log("Application running on port:", PORT);

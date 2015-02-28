@@ -20,7 +20,6 @@
 
 var NewArticleForm = React.createClass({
     handleSubmit: function(event){
-        console.log('hello!');
         event.preventDefault();
         var name = this.refs.name.getDOMNode().value.trim();
         var grade = this.refs.grade.getDOMNode().value.trim();
