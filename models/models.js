@@ -16,4 +16,4 @@ article_model = mongoose.model('Article', articleSchema);
 article_collection_model = mongoose.model('Article_collection', articleCollectionSchema);
 
 module.exports.Article = article_model;
-module.exports.Article_collection = article_collection_model;
+module.exports.Collection = article_collection_model;
