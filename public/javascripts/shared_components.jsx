@@ -41,7 +41,7 @@ var Searchbar = React.createClass({
           .done(
               function(data, status){
                   console.log('Posted!');
-                  window.location.replace('/view/' + data.name);
+                  window.location.replace('/view_article/' + data.name);
               })
           .error(
               function(data, status) {
