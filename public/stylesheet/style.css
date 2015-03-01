@@ -1,0 +1,34 @@
+body {
+	width: 100%;
+	background-color: #ADFFFF	;
+}
+
+h1 {
+	text-align: center;
+	color: #400000;
+	font-weight: bold;
+	font-size: 60px;
+}
+
+h2 {
+	text-align: center;
+	color: #004C00;
+	font-size: 40px;
+}
+
+.toolbar{
+	width: 100%;
+	background-color: black;
+}
+
+.new_article_button {
+	float: right;
+}
+
+.home_button {
+	float: right;
+}
+
+.description {
+	font-size: 20px;
+}

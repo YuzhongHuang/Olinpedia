@@ -84,6 +84,18 @@ var post_search_article = function(req,res){
     }
 };
 
+var post_edit_article = function(req,res){
+    var edit_article_info = req.body;
+    
+    Article.update({'name':edit_article_info.name}, 
+        {'description':edit_article_info.description}, function(err, num, data) {
+            console.log(edit_article_info);
+            res.json(edit_article_info); 
+        }
+    );
+
+};
+
 var get_article = function(req,res){
     if (req.params.name) {
         Article.findOne({name: req.params.name}, function (err, article) {
@@ -223,6 +235,7 @@ module.exports.home = home;
 module.exports.get_new_article = get_new_article;
 module.exports.get_article = get_article;
 module.exports.post_new_article = post_new_article;
+module.exports.post_edit_article = post_edit_article;
 module.exports.view_article = view_article;
 module.exports.get_random_article = get_random_article;
 module.exports.post_search_article = post_search_article;
