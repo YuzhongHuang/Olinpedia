@@ -17,40 +17,6 @@
 //        .done(onSuccess)
 //        .error(onError);
 //});
-var CollectionList = React.createClass({
-  loadCollectionsFromServer: function() {
-    var this_component = this;
-    $.get('get_all_collection_names')
-        .done(
-          function(data) {
-              this_component.setState({data: data});
-          }
-        )
-        .error(
-          function(xhr, status, err) {
-              console.error(this_component.props.url, status, err.toString());
-          }
-        );
-  },
-  getInitialState: function() {
-    return {data: [] };
-  },
-  componentDidMount: function() {
-      this.loadCollectionsFromServer();
-      //setInterval(this.loadCollectionsFromServer, 2000); //refresh the collection list every 2000 milliseconds.
-  },
-  render: function() {
-      console.log(this.state.data);
-      var collection_list = this.state.data.map(function(collection) {
-        console.log(collection);
-        return <option id={collection}>{collection}</option>
-      });
-      return <select id="collection" ref="collection">
-                <option id=""></option>
-                {collection_list}
-             </select>
-  }
-});
 
 var NewArticleForm = React.createClass({
     getInitialState: function() {

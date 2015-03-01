@@ -11,6 +11,7 @@ var Wiki = React.createClass({
 
 var initialName = document.getElementById('initial-name').innerHTML;
 var initialUrl = '/get_article/'+initialName
+console.log('THIS IS THE INITIAL URL PRINTED IN VIEWARTICLE');
 console.log(initialUrl);
 
 React.render(
