@@ -1,3 +1,38 @@
+var CollectionList = React.createClass({
+  loadCollectionsFromServer: function() {
+    var this_component = this;
+    $.get('/get_all_collection_names')
+        .done(
+          function(data, status) {
+              this_component.setState({data: data});
+          }
+        )
+        .error(
+          function(xhr, status, err) {
+              console.error(this_component.props.url, status, err.toString());
+          }
+        );
+  },
+  getInitialState: function() {
+    return {data: [] };
+  },
+  componentDidMount: function() {
+      this.loadCollectionsFromServer();
+      //setInterval(this.loadCollectionsFromServer, 2000); //refresh the collection list every 2000 milliseconds.
+  },
+  render: function() {
+      console.log(this.state.data);
+      console.log('hello');
+      var collection_list = this.state.data.map(function(collection) {
+        return <option id={collection}>{collection}</option>
+      });
+      return <select id="collection" ref="collection">
+                <option id=""></option>
+                {collection_list}
+             </select>
+  }
+});
+
 var NewArticleButton =  React.createClass({
   handleSubmit: function(event){
     event.preventDefault();
@@ -35,19 +70,8 @@ var HomeButton =  React.createClass({
 var Searchbar = React.createClass({
   handleSubmit: function(event){
       event.preventDefault();
-      var name = this.refs.search.getDOMNode().value.trim();
-      var grade = this.refs.grade.getDOMNode().value.trim();
-      $.post("/search_article", {name:name, grade:grade})
-          .done(
-              function(data, status){
-                  console.log('Posted!');
-                  window.location.replace('/view_article/' + data.name);
-              })
-          .error(
-              function(data, status) {
-                  console.log("status", status);
-                  console.log("error", data);
-              });
+      var search = this.refs.search.getDOMNode().value.trim();
+      window.location.replace('/search_results/' + search);
   },
   render: function() {
 
@@ -57,12 +81,6 @@ var Searchbar = React.createClass({
       <div className="searchbar" style={style}>
         <form onSubmit={this.handleSubmit}>
           <input id="search" type="text" ref="search"></input>
-          <select id="grade" ref="grade">
-              <option id="freshmen">freshmen</option>
-              <option id="sophomore">sophomore</option>
-              <option id="junior">junior</option>
-              <option id="senior">senior</option>
-          </select>
           <input id="submit_button" className="button" type="submit" value="GO!"></input>
         </form>
       </div>
@@ -122,6 +140,48 @@ var Article = React.createClass({
             {this.state.data.image}
         </p>
         {this.state.data.error_message}
+      </div>
+    );
+  }
+});
+
+var Collection = React.createClass({
+  loadCollectionFromServer: function() {
+    var this_component = this;
+    console.log(this.props.url);
+    $.get(this.props.url)
+        .done(
+          function(data) {
+              this_component.setState({data: data});
+          }
+        )
+        .error(
+          function(xhr, status, err) {
+              console.error(this_component.props.url, status, err.toString());
+          }
+        );
+  },
+  getInitialState: function() {
+    return {data:{articles:[]} };
+  },
+  componentDidMount: function() {
+      this.loadCollectionFromServer();
+      setInterval(this.loadCollectionFromServer, 2000); //refresh the article every 2000 milliseconds.
+  },
+  render: function() {
+    var articles = this.state.data.articles.map(function(article){
+        var url = '/view_article/'+article.name;
+        return (<div className="article" id={article._id}>
+                    <a href={url}>{article.name}</a>
+                </div>
+        );
+    });
+    return (
+      <div className="collection">
+        <h2 className="name">
+          {this.state.data.name}
+        </h2>
+        {articles}
       </div>
     );
   }
