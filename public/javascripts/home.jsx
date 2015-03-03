@@ -39,10 +39,11 @@ var RandomArticle = React.createClass({
   },
   render: function() {
     return (
-      <div className="article">
-        <h2 className="name">
+      <div id="article" className="article">
+        <h1 className="title">
           {this.state.data.name}
-        </h2>
+        </h1>
+        <hr></hr>
         <p className="description">
             {this.state.data.description}
             {this.state.data.image}
@@ -57,7 +58,7 @@ var Wiki = React.createClass({
     return (
         <div className="wiki">
             <Toolbar />
-            <h1> THIS IS THE HOMEPAGE </h1>
+            <h3 id="homepage_message"> A Beautiful Random Person! </h3>
             <RandomArticle />
         </div>
     );

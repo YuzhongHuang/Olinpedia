@@ -1,23 +1,3 @@
-//var $form = $("#new_article_form");
-//
-//var onSuccess = function(data, status){
-//    console.log('Posted!');
-//    window.location.replace('/view/' + data.name);
-//}
-//
-//var onError = function(data, status) {
-//    console.log("status", status);
-//    console.log("error", data);
-//}
-//
-//$form.submit(function(event) {
-//    console.log($form.serialize());
-//    event.preventDefault();
-//    $.post("new_article", $form.serialize())
-//        .done(onSuccess)
-//        .error(onError);
-//});
-
 var NewArticleForm = React.createClass({
     getInitialState: function() {
       return {};
@@ -52,12 +32,13 @@ var NewArticleForm = React.createClass({
     render: function() {
       return(
         <div>
-            Article title 
             <form className="newArticleForm" onSubmit={this.handleSubmit}>
-                <input id="name" type="text" ref="name"></input>
-                    <CollectionList ref="collection" />
-                Article description
-                <textarea id="description" ref="description"></textarea>
+                Title <br></br>
+                <input id="name" type="text" ref="name"></input> <br></br>
+                Collection (Optional)
+                <CollectionList ref="collection" /> <br></br>
+                Description
+                <textarea id="description" ref="description"></textarea> <br></br>
                 <p> image </p>
                 <input id="article_submit_button" className="button" type="submit" value="Submit new article!"></input>
             </form>
@@ -72,7 +53,9 @@ var Wiki = React.createClass({
     return (
         <div className="wiki">
             <Toolbar />
-            <NewArticleForm />
+            <div id="article">
+                <NewArticleForm />
+            </div>
         </div>
     );
   }

@@ -30,11 +30,9 @@ app.get('/get_article/:name', index.get_article);
 app.get('/view_article/:name', index.view_article);
 app.get('/new_article', index.get_new_article);
 app.post('/new_article', index.post_new_article);
-
 app.post('/edit_article', index.post_edit_article);
-//app.post('/search_article', index.post_search_article);
-
 app.get('/search_article/*', index.search_article);
+
 app.get('/search_results/*', index.search_results);
 
 app.get('/get_all_collection_names', index.get_all_collection_names);

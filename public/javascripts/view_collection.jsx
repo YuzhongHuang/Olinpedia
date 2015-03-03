@@ -3,7 +3,9 @@ var Wiki = React.createClass({
     return (
         <div className="wiki">
             <Toolbar />
-            <Collection url={this.props.url} />
+            <div id="article">
+                <Collection url={this.props.url} />
+            </div>
         </div>
     );
   }

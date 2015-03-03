@@ -33,8 +33,14 @@ var Wiki = React.createClass({
     return (
         <div className="wiki">
             <Toolbar />
-            {results}
-        {this.state.message}
+            <div id="article">
+                <div id="search_results">
+                    {results}
+                </div>
+            </div>
+            <div id="error_message">
+                {this.state.message}
+            </div>
         </div>
     );
   }

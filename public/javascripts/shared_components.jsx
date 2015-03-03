@@ -63,6 +63,57 @@ var HomeButton =  React.createClass({
   }
 });
 
+var CollectionLink = React.createClass({
+    handleClick: function(){
+        window.location.replace(this.props.url);
+    },
+    render: function(){
+          return <li onClick={this.handleClick}>{this.props.collection}</li>
+    }
+});
+
+var DropdownCollections = React.createClass({
+    //html and css from http://cssdeck.com/labs/another-simple-css3-dropdown-menu
+    
+    loadCollectionsFromServer: function() {
+      var this_component = this;
+      $.get('/get_all_collection_names')
+          .done(
+            function(data, status) {
+                this_component.setState({data: data});
+            }
+          )
+          .error(
+            function(xhr, status, err) {
+                console.error(this_component.props.url, status, err.toString());
+            }
+          );
+    },
+    getInitialState: function() {
+      return {data: [] };
+    },
+    componentDidMount: function() {
+        this.loadCollectionsFromServer();
+    },
+    render: function(){
+        var collection_list = this.state.data.map(function(collection) {
+         var url = "/view_collection/"+collection;
+          var collection_link = <CollectionLink url={url} collection={collection}/>
+          console.log(collection_link);
+          return collection_link;
+        });
+        return(
+            <ul>
+              <li>
+                 Collections
+                <ul>
+                  {collection_list}
+                </ul>
+              </li>
+            </ul>);
+    }
+});
+
 var Searchbar = React.createClass({
   handleSubmit: function(event){
       event.preventDefault();
@@ -72,10 +123,12 @@ var Searchbar = React.createClass({
   render: function() {
 
     return (
-        <form class="searchbar" onSubmit={this.handleSubmit}>
-          <input id="search" type="text" ref="search"></input>
-          <input id="submit_button" className="button" type="submit" value="GO!"></input>
+        <div id="searchbar">
+        <form className="searchbar" onSubmit={this.handleSubmit}>
+          <input id="search_text" type="text" ref="search"></input>
+          <input id="search_button" className="button" type="submit" value="Search"></input>
         </form>
+        </div>
     );
   }
 });
@@ -83,10 +136,12 @@ var Searchbar = React.createClass({
 var Toolbar = React.createClass({
   render: function() {
     return (
-      <div className="toolbar">
+      <div className="toolbar" id="toolbar">
+          <div id="logo_container"><a href="/"><img id="logo" src="../images/olin_wiki_logo.jpg" alt="some_text"></img></a></div>
           <Searchbar />
-            <NewArticleButton />
-            <HomeButton />
+          <div><a href="/new_article" id="new_article_link"><ul><li>New Article</li></ul></a></div>
+          <div><a href="/new_collection" id="new_collection_link"><ul><li>New Collection</li></ul></a></div>
+          <div><DropdownCollections/></div>
       </div>
     );
   }
@@ -170,10 +225,11 @@ var Article = React.createClass({
   },
   render: function() {
     return (
-      <div className="article">
-        <h2 className="name">
+      <div id="article" className="article">
+        <h1 className="title">
           {this.state.data.name}
-        </h2>
+        </h1>
+        <hr></hr>
         <p className="description">
             {this.state.data.description}
             {this.state.data.image}
@@ -214,7 +270,7 @@ var Collection = React.createClass({
   render: function() {
     var articles = this.state.data.articles.map(function(article){
         var url = '/view_article/'+article.name;
-        return (<div className="article" id={article._id}>
+        return (<div className="result" id={article._id}>
                     <a href={url}>{article.name}</a>
                 </div>
         );
@@ -224,6 +280,7 @@ var Collection = React.createClass({
         <h2 className="name">
           {this.state.data.name}
         </h2>
+        <hr></hr>
         {articles}
       </div>
     );

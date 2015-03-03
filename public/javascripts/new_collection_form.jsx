@@ -36,7 +36,9 @@ var Wiki = React.createClass({
     return (
         <div className="wiki">
             <Toolbar />
-            <NewCollectionForm />
+            <div id="article">
+                <NewCollectionForm />
+            </div>
         </div>
     );
   }
