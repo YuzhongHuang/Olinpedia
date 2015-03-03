@@ -1,5 +1,6 @@
 var Article = require('../models/models.js').Article;
 var Collection = require('../models/models.js').Collection;
+var fs = require('fs');
 
 var home = function(req,res){ 
     res.render('home');
@@ -32,7 +33,6 @@ var get_new_article = function(req,res){
 
 var post_new_article = function(req,res){
     var new_article_info = req.body;
-    console.log(new_article_info);
     var new_article = new Article(new_article_info);
 
     Article.count({'name':new_article_info.name}, function(err, count) {
