@@ -30,8 +30,15 @@ var RandomArticle = React.createClass({
           }
         );
   },
+  handleClick: function() {
+    if (!this.state.showForm){
+        this.setState({ showForm:true, showContent:false });
+    } else {
+        this.setState({ showForm:false, showContent:true });
+    }
+  },
   getInitialState: function() {
-    return {data: []};
+    return {data: [], showForm:false, showContent:true};
   },
   componentDidMount: function() {
       this.loadRandomArticleFromServer();
@@ -40,14 +47,27 @@ var RandomArticle = React.createClass({
   render: function() {
     return (
       <div id="article" className="article">
-        <h1 className="title">
-          {this.state.data.name}
-        </h1>
+        <div id="title_and_edit">
+            <h1 id="article_title">
+              {this.state.data.name}
+            </h1>
+            <div className="edit_button">
+                <button refs="Edit" className="button" onClick={this.handleClick}>
+                    Edit
+                </button>
+            </div>
+        </div>
         <hr></hr>
-        <p className="description">
-            {this.state.data.description}
-        </p>
-        <img src={this.state.data.image} alt="picture" height="200" width="200" />
+        { this.state.showContent ?
+                <div>
+                    <span className="description">
+                        {this.state.data.description}
+                    </span>
+                    <img src={this.state.data.image} className="profile_image" alt="picture" height="200" width="200" />
+                </div>
+        :null }
+        { this.state.showForm ? <EditForm Name={this.state.data.name} Description={this.state.data.description} Image={this.state.data.image} /> : null }
+        {this.state.data.error_message}
       </div>
     );
   }
