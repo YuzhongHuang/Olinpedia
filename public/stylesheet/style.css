@@ -12,7 +12,7 @@ body {
 .title{
     margin-left: 0px;
     margin-right: 0px;
-    margin-top: 10px;
+    margin-top: 60px;
     margin-bottom: 0px;
     word-wrap: break-word;
 }
@@ -248,4 +248,83 @@ a:hover{
 
 a:active{
     color: black;
+}
+
+#collection_select{
+    display: block;
+    float: right;
+}
+
+#title_enter{
+	font-size: 30px;
+    border: 0;
+}
+
+#title_enter_div{
+    margin-top: 60px;
+}
+
+#text_area_div{
+    background-color: blue;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+#new_article_description{
+    font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+#image_upload_div{
+    display: inline;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+#image_upload_div input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#article_submit_button_div{
+    display: inline;
+    float: right;
+}
+
+#article_title{
+    display: inline;
+    padding: none;
+    margin: none;
+}
+
+.edit_button{
+    margin-left: 1000px;
+    display: inline-block;
+}
+
+
+#collection_name{
+    font-size: 30px;
+}
+
+#title_and_edit{
+    margin-top: 60px;
+}
+
+#new_collection_name{
+    border: 1px solid grey;
+    width: 200px;
+    height: 26px;
+    border-radius: 6px;
+    font-size: 20px;
 }

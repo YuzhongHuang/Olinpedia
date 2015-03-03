@@ -147,7 +147,7 @@ var Toolbar = React.createClass({
 
 var EditForm = React.createClass({
   getInitialState: function() {
-    return {data_uri: null};
+    return {data_uri: null, data: [], error_message:''};
   },
 
   handleSubmit: function() {
@@ -198,16 +198,11 @@ var EditForm = React.createClass({
 
     reader.readAsDataURL(file);
   },
-
   render: function() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          Name: <br></br>       
-          {this.props.Name}
-          <br></br>
-          Description
-          <textarea className="newDescription" ref="description" defaultValue={this.props.Description}>
+          <textarea id="new_article_description" className="newDescription description" ref="description" defaultValue={this.props.Description}>
           </textarea>
           <br/>
           <br/>
@@ -218,6 +213,7 @@ var EditForm = React.createClass({
           <br/>
           <input id="EditForm_submit_button" className="button" type="submit" value="Submit your edition"></input>
         </form>
+        {this.state.error_message}
       </div>
     );
   }
@@ -241,11 +237,15 @@ var Article = React.createClass({
   },
 
   handleClick: function() {
-    this.setState({ showForm:true });
+    if (!this.state.showForm){
+        this.setState({ showForm:true, showContent:false });
+    } else {
+        this.setState({ showForm:false, showContent:true });
+    }
   },
 
   getInitialState: function() {
-    return {data: [], showForm:false};
+    return {data: [], showForm:false, showContent:true};
   },
   componentDidMount: function() {
       this.loadArticleFromServer();
@@ -254,17 +254,25 @@ var Article = React.createClass({
   render: function() {
     return (
       <div id="article" className="article">
-        <h1 className="title">
-          {this.state.data.name}
-        </h1>
+        <div id="title_and_edit">
+            <h1 id="article_title">
+              {this.state.data.name}
+            </h1>
+            <div className="edit_button">
+                <button refs="Edit" className="button" onClick={this.handleClick}>
+                    Edit
+                </button>
+            </div>
+        </div>
         <hr></hr>
-        <p className="description">
-            {this.state.data.description}
-        </p>
-        <img src={this.state.data.image} alt="picture" height="200" width="200" />
-        <button refs="Edit" onClick={this.handleClick}>
-          edit description
-        </button>
+        { this.state.showContent ?
+                <div>
+                    <p className="description">
+                        {this.state.data.description}
+                    </p>
+                    <img src={this.state.data.image} alt="picture" height="200" width="200" />
+                </div>
+        :null }
         { this.state.showForm ? <EditForm Name={this.state.data.name} Description={this.state.data.description} Image={this.state.data.image} /> : null }
         {this.state.data.error_message}
       </div>
@@ -305,7 +313,7 @@ var Collection = React.createClass({
     });
     return (
       <div className="collection">
-        <h2 className="name">
+        <h2 id="collection_name" className="name title">
           {this.state.data.name}
         </h2>
         <hr></hr>
