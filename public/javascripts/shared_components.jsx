@@ -151,18 +151,21 @@ var EditForm = React.createClass({
   },
 
   handleSubmit: function() {
+    console.log("iii");
     event.preventDefault();
+
     if (!this.state.data_uri) {
-      var image = this.props.Image;
+      if (this.props.Image) {
+        var image = this.props.Image;
+      }
+      var image = "";      
     } else {
       var image = this.state.data_uri;
     }
 
     var name = this.props.Name;
-    console.log(name);
     //var collection = this.refs.collection.getDOMNode().value.trim();
     var description = this.refs.description.getDOMNode().value.trim();
-    console.log(description);
     var this_component = this;
     if (!name || !description) {
       this_component.setState({error_message: "Don't leave the name or description boxes blank!"});
@@ -202,7 +205,7 @@ var EditForm = React.createClass({
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <textarea id="new_article_description" className="newDescription description" ref="description" defaultValue={this.props.Description}>
+          <textarea id="new_article_description" className="newDescription" ref="description" defaultValue={this.props.Description}>
           </textarea>
           <br/>
           <br/>
