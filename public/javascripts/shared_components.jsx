@@ -147,7 +147,7 @@ var Toolbar = React.createClass({
 
 var EditForm = React.createClass({
   getInitialState: function() {
-    return {data_uri: null, data: [], error_message:''};
+    return {data_uri: null, data: [], error_message:'', selected_file:'No file selected!'};
   },
 
   handleSubmit: function() {
@@ -195,6 +195,7 @@ var EditForm = React.createClass({
 
     reader.onload = function(upload) {
       this.setState({
+        selected_file: file,
         data_uri: upload.target.result
       });
     }.bind(this);
@@ -209,12 +210,14 @@ var EditForm = React.createClass({
           </textarea>
           <br/>
           <br/>
-          image:
-          <br/>
-          <input id="image_upload" ref="image_upload" type="file" onChange={this.handleChange} />
-          <br/>
-          <br/>
-          <input id="EditForm_submit_button" className="button" type="submit" value="Submit your edition"></input>
+            <div id="image_upload_div" className="button">
+                <span>Upload Image</span>
+                <input id="image_upload_button" ref="image_upload" type="file" onChange={this.handleChange} />
+            </div>
+            <span>{this.state.selected_file}</span>
+          <div id="article_submit_button_div">
+              <input id="EditForm_submit_button" className="button" type="submit" value="Submit your changes!"></input>
+          </div>
         </form>
         {this.state.error_message}
       </div>
@@ -270,10 +273,10 @@ var Article = React.createClass({
         <hr></hr>
         { this.state.showContent ?
                 <div>
-                    <p className="description">
+                    <span className="description">
                         {this.state.data.description}
-                    </p>
-                    <img src={this.state.data.image} alt="picture" height="200" width="200" />
+                    </span>
+                    <img src={this.state.data.image} className="profile_image" alt="picture" height="200" width="200" />
                 </div>
         :null }
         { this.state.showForm ? <EditForm Name={this.state.data.name} Description={this.state.data.description} Image={this.state.data.image} /> : null }

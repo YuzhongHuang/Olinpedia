@@ -5,10 +5,6 @@ body {
     margin: 0px;
 }
 
-.description{
-    word-wrap: break-word;
-}
-
 .title{
     margin-left: 0px;
     margin-right: 0px;
@@ -98,6 +94,7 @@ a{
 }
 
 .description {
+    word-wrap: break-word;
 	font-size: 20px;
 }
 
@@ -327,4 +324,13 @@ a:active{
     height: 26px;
     border-radius: 6px;
     font-size: 20px;
+}
+
+.profile_image{
+    float: right;
+    margin: 20px;
+}
+
+#new_article_description{
+    height: 300px;
 }
