@@ -146,33 +146,57 @@ var Toolbar = React.createClass({
 });
 
 var EditForm = React.createClass({
+  getInitialState: function() {
+    return {data_uri: null};
+  },
+
   handleSubmit: function() {
     event.preventDefault();
-      var name = this.props.Name;
-      console.log(name);
-      //var collection = this.refs.collection.getDOMNode().value.trim();
-      var description = this.refs.description.getDOMNode().value.trim();
-      var this_component = this;
-      if (!name || !description) {
-        this_component.setState({error_message: "Don't leave the name or description boxes blank!"});
-        return;
-      }
-      $.post("/edit_article", {name:name, description:description}) //no collection
-          .done(
-              function(data, status){
-                  console.log(data);
-                  if (!data.error_message){
-                      console.log('Posted!');
-                      window.location.replace('/view_article/' + data.name);
-                  } else {
-                      this_component.setState({error_message: data.error_message});
-                  }
-              })
-          .error(
-              function(data, status) {
-                  console.log("status", status);
-                  console.log("error", data);
-              });
+    if (!this.state.data_uri) {
+      var image = this.props.Image;
+    } else {
+      var image = this.state.data_uri;
+    }
+
+    var name = this.props.Name;
+    console.log(name);
+    //var collection = this.refs.collection.getDOMNode().value.trim();
+    var description = this.refs.description.getDOMNode().value.trim();
+    console.log(description);
+    var this_component = this;
+    if (!name || !description) {
+      this_component.setState({error_message: "Don't leave the name or description boxes blank!"});
+      return;
+    }
+    $.post("/edit_article", {name:name, description:description, image:image}) //no collection
+        .done(
+            function(data, status){
+                console.log(data);
+                if (!data.error_message){
+                    console.log('Posted!');
+                    window.location.replace('/view_article/' + data.name);
+                } else {
+                    this_component.setState({error_message: data.error_message});
+                }
+            })
+        .error(
+            function(data, status) {
+                console.log("status", status);
+                console.log("error", data);
+            });
+  },
+
+  handleChange: function(e) {
+    var reader = new FileReader();
+    var file = e.target.files[0];
+
+    reader.onload = function(upload) {
+      this.setState({
+        data_uri: upload.target.result
+      });
+    }.bind(this);
+
+    reader.readAsDataURL(file);
   },
 
   render: function() {
@@ -185,7 +209,13 @@ var EditForm = React.createClass({
           Description
           <textarea className="newDescription" ref="description" defaultValue={this.props.Description}>
           </textarea>
-          <br />
+          <br/>
+          <br/>
+          image:
+          <br/>
+          <input id="image_upload" ref="image_upload" type="file" onChange={this.handleChange} />
+          <br/>
+          <br/>
           <input id="EditForm_submit_button" className="button" type="submit" value="Submit your edition"></input>
         </form>
       </div>
@@ -235,7 +265,7 @@ var Article = React.createClass({
         <button refs="Edit" onClick={this.handleClick}>
           edit description
         </button>
-        { this.state.showForm ? <EditForm Name={this.state.data.name} Description={this.state.data.description} /> : null }
+        { this.state.showForm ? <EditForm Name={this.state.data.name} Description={this.state.data.description} Image={this.state.data.image} /> : null }
         {this.state.data.error_message}
       </div>
     );

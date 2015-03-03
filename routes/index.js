@@ -92,7 +92,9 @@ var post_edit_article = function(req,res){
     var edit_article_info = req.body;
     
     Article.update({'name':edit_article_info.name}, 
-        {'description':edit_article_info.description}, function(err, num, data) {
+        {'description':edit_article_info.description,
+         'image':edit_article_info.image},
+         function(err, num, data) {
             console.log(edit_article_info);
             res.json(edit_article_info); 
         }

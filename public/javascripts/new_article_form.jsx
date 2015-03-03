@@ -1,9 +1,6 @@
 var NewArticleForm = React.createClass({
     getInitialState: function() {
-      return {
-        myFileName: "",
-        myFileHandle: {}
-      };
+      return {};
     },
 
     handleChange: function(e) {
@@ -21,9 +18,7 @@ var NewArticleForm = React.createClass({
 
     handleSubmit: function(event){
         event.preventDefault();
-
         var image = this.state.data_uri;
-        console.log(typeof(image));
         var name = this.refs.name.getDOMNode().value.trim();
         var collection = this.refs.collection.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
@@ -54,11 +49,15 @@ var NewArticleForm = React.createClass({
       return(
         <div>
             <form className="newArticleForm" onSubmit={this.handleSubmit}>
-                Title <br></br>
+                Title <br/>
                 <input id="name" type="text" ref="name"></input> <br></br>
+                <br/>
                 Collection (Optional)
+                <br/>
                 <CollectionList ref="collection" /> <br></br>
+                <br/>
                 Description
+                <br/>
                 <textarea id="description" ref="description"></textarea> <br></br>
                 <p> image </p>
                 <input id="image_upload" ref="image_upload" type="file" onChange={this.handleChange} />
