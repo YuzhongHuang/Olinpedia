@@ -46,8 +46,8 @@ var RandomArticle = React.createClass({
         <hr></hr>
         <p className="description">
             {this.state.data.description}
-            {this.state.data.image}
         </p>
+        <img src={this.state.data.image} alt="picture" height="200" width="200" />
       </div>
     );
   }
