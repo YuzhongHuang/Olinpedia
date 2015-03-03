@@ -21,9 +21,10 @@ var NewCollectionForm = React.createClass({
     render: function() {
       return(
         <div>
-            Collection title 
-            <form className="newCollectionForm" onSubmit={this.handleSubmit}>
-                <input id="name" type="text" ref="name"></input>
+            <form className="newCollectionForm name title" onSubmit={this.handleSubmit}>
+                <input id="new_collection_name" type="text" ref="name" placeholder=" Collection Name"></input>
+                <br></br>
+                <br></br>
                 <input id="Collection_submit_button" className="button" type="submit" value="Create new Collection!"></input>
             </form>
         </div>
