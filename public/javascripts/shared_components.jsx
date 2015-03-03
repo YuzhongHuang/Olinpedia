@@ -151,17 +151,19 @@ var EditForm = React.createClass({
   },
 
   handleSubmit: function() {
-    console.log("iii");
     event.preventDefault();
 
-    if (!this.state.data_uri) {
-      if (this.props.Image) {
+    if (this.props.Image) {
+      if (!this.state.data_uri) {
         var image = this.props.Image;
-      }
-      var image = "";      
     } else {
       var image = this.state.data_uri;
-    }
+    }} else {
+      if (!this.state.data_uri) {
+        var image = "../images/default.jpg";
+    } else {
+      var image = this.state.data_uri;
+    }}
 
     var name = this.props.Name;
     //var collection = this.refs.collection.getDOMNode().value.trim();
@@ -201,6 +203,7 @@ var EditForm = React.createClass({
 
     reader.readAsDataURL(file);
   },
+
   render: function() {
     return (
       <div>

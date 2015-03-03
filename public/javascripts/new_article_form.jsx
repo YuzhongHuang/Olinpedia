@@ -23,7 +23,11 @@ var NewArticleForm = React.createClass({
 
     handleSubmit: function(event){
         event.preventDefault();
-        var image = this.state.data_uri;
+        if (!this.state.data_uri) {
+          image="../images/default.jpg";
+        } else {
+          var image = this.state.data_uri;
+        }
         var name = this.refs.name.getDOMNode().value.trim();
         var collection = this.refs.collection.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
