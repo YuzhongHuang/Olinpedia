@@ -21,8 +21,6 @@ var CollectionList = React.createClass({
       //setInterval(this.loadCollectionsFromServer, 2000); //refresh the collection list every 2000 milliseconds.
   },
   render: function() {
-      console.log(this.state.data);
-      console.log('hello');
       var collection_list = this.state.data.map(function(collection) {
         return <option id={collection}>{collection}</option>
       });
@@ -176,8 +174,8 @@ var Article = React.createClass({
         </h2>
         <p className="description">
             {this.state.data.description}
-            {this.state.data.image}
         </p>
+        <img src={this.state.data.image} alt="picture" height="200" width="200" />
         <button refs="Edit" onClick={this.handleClick}>
           edit description
         </button>
